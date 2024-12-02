@@ -1,37 +1,3 @@
-function drawNumbers() {
-  // Show the loader
-  const loader = document.getElementById("loader");
-  loader.style.display = "block";
-
-  // Hide previous results
-  document
-    .querySelectorAll(".circle")
-    .forEach((circle) => circle.classList.remove("selected"));
-  for (let i = 1; i <= 6; i++) {
-    document.getElementById(`ball${i}`).innerText = "";
-  }
-
-  // Simulate a delay of 2 seconds
-  setTimeout(() => {
-    // Use AI-inspired logic to predict numbers
-    const selectedNumbers = predictNumbers();
-
-    // Highlight selected numbers in the grid
-    selectedNumbers.forEach((num) => {
-      document.getElementById(`circle${num}`).classList.add("selected");
-    });
-
-    // Display the results in the balls
-    for (let i = 0; i < 6; i++) {
-      document.getElementById(`ball${i + 1}`).innerText = selectedNumbers[i];
-    }
-
-    // Hide the loader after showing results
-    loader.style.display = "none";
-  }, 2000); // 2 seconds delay
-}
-
-// AI-inspired logic to predict numbers
 function predictNumbers() {
   // Historical data
   const data = [
@@ -545,24 +511,32 @@ function predictNumbers() {
   // Calculate the frequency of each number
   const frequencyMap = new Map();
   parsedData.forEach((num) => {
-    frequencyMap.set(num, (frequencyMap.get(num) || 0) + 1);
+      frequencyMap.set(num, (frequencyMap.get(num) || 0) + 1);
   });
 
-  // Sort numbers by frequency (descending order)
-  const sortedNumbers = Array.from(frequencyMap.entries())
-    .sort((a, b) => b[1] - a[1])
-    .map((entry) => entry[0]);
+  // Create a pool of numbers with weighted probabilities
+  const weightedPool = [];
+  frequencyMap.forEach((frequency, number) => {
+      // Add the number multiple times based on its frequency
+      for (let i = 0; i < frequency; i++) {
+          weightedPool.push(number);
+      }
+  });
 
-  // Select the top 20 most frequent numbers
-  const pool = sortedNumbers.slice(0, 20);
+  // Shuffle the weighted pool to add randomness
+  for (let i = weightedPool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [weightedPool[i], weightedPool[j]] = [weightedPool[j], weightedPool[i]];
+  }
 
-  // Randomly pick 6 unique numbers from the pool
+  // Select 6 unique numbers
   const selectedNumbers = [];
   while (selectedNumbers.length < 6) {
-    const num = pool[Math.floor(Math.random() * pool.length)];
-    if (!selectedNumbers.includes(num)) {
-      selectedNumbers.push(num);
-    }
+      const randomIndex = Math.floor(Math.random() * weightedPool.length);
+      const num = weightedPool[randomIndex];
+      if (!selectedNumbers.includes(num)) {
+          selectedNumbers.push(num);
+      }
   }
 
   return selectedNumbers;
