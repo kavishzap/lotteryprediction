@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <title>Lottery Prediction</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f4f4f4; /* Fallback background color */
+        background-image: radial-gradient(gray 1px, transparent 1px);
+        background-size: 10px 10px; /* Adjust dot spacing */
+      }
+
+      .container {
+        text-align: center;
+        background-image: url("image.png");
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+      }
+      .header {
+        font-family: "Poppins", sans-serif; /* Apply the new font */
+        font-size: 16px; /* Increase the font size for emphasis */
+        font-weight: 300; /* Make it bold */
+        color: #333; /* Use a darker color for better readability */
+        margin-bottom: 20px;
+        text-transform: uppercase; /* Optional: Make the text uppercase */
+        letter-spacing: 1px; /* Optional: Add spacing between letters */
+        color: white;
+      }
+      .balls {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0;
+      }
+      .ball {
+        width: 40px;
+        height: 40px;
+        background: radial-gradient(
+          circle at 30% 30%,
+          #fa8787,
+          #ff0202,
+          #000000
+        );
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        color: white;
+      }
+      .draw-button {
+        padding: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        background: red;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+        margin-top: 20px;
+      }
+      .circle {
+        width: 40px;
+        height: 40px;
+        background: radial-gradient(
+          circle at 30% 30%,
+          #87cefa,
+          #4682b4,
+          #000000
+        );
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        color: white;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Add subtle shadow for a realistic effect */
+      }
+
+      .selected {
+        background: radial-gradient(
+          circle at 30% 30%,
+          #fa8787,
+          #ff0202,
+          #000000
+        );
+      }
+      .loader {
+        border: 4px solid #f3f3f3; /* Light gray */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+        display: none; /* Hidden by default */
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">Lottery Prediction With Artificial Intelligence</div>
+      <div class="loader" id="loader"></div>
+      <div class="balls">
+        <div class="ball" id="ball1"></div>
+        <div class="ball" id="ball2"></div>
+        <div class="ball" id="ball3"></div>
+        <div class="ball" id="ball4"></div>
+        <div class="ball" id="ball5"></div>
+        <div class="ball" id="ball6"></div>
+      </div>
+      <button class="draw-button" onclick="drawNumbers()">DRAW</button>
+      <div class="grid" id="grid">
+        <!-- Numbers 1 to 40 -->
+        <script>
+          for (let i = 1; i <= 40; i++) {
+            document.write(`<div class="circle" id="circle${i}">${i}</div>`);
+          }
+        </script>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
